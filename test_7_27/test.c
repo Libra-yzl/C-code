@@ -266,3 +266,25 @@
 //	printf("%d", ret);
 //	return 0;
 //}
+#include <stdio.h>
+int print(int n)
+{
+	int i = 0;
+	int r = 0;
+	r = n % 10;
+	r = r * r;
+	if (n > 9)
+	{
+		print(n / 10);
+		return r;
+	}
+	
+}
+int main()
+{
+	int n = 0;
+	scanf("%d", &n);
+	int ret = print(n);
+	printf("%d", ret);
+	return 0;
+}
