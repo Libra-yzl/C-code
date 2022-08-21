@@ -124,28 +124,28 @@
 //	return 0;
 //}
 
-#include <stdio.h>
-
-int Fac(int n)
-{
-	if (n <= 1)
-		return 1;
-	else
-		return n * Fac(n - 1);
-}
-
-int main()
-{
-	int n = 0;
-	scanf("%d", &n);
-	int ret = Fac(n);
-	printf("ret = %d\n", ret);
-	int i = 0;
-	ret = 1;
-	for (i = 1; i <= n; i++)
-	{
-		ret *= i;
-	}
-	printf("ret = %d\n", ret);
-	return 0;
-}
+//#include <stdio.h>
+//
+//int Fac(int n)
+//{
+//	if (n <= 1)
+//		return 1;
+//	else
+//		return n * Fac(n - 1);
+//}
+//
+//int main()
+//{
+//	int n = 0;
+//	scanf("%d", &n);
+//	int ret = Fac(n);
+//	printf("ret = %d\n", ret);
+//	int i = 0;
+//	ret = 1;
+//	for (i = 1; i <= n; i++)
+//	{
+//		ret *= i;
+//	}
+//	printf("ret = %d\n", ret);
+//	return 0;
+//}
