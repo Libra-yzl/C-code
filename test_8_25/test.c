@@ -95,34 +95,54 @@
 //    return 0;
 //}
 
+//int findMaxConsecutiveOnes(int* nums, int numsSize) {
+//    int i = 0;
+//    int count = 0;
+//    int arr[10001] = { 0 };
+//    for (i = 0; i < numsSize; i++)
+//    {
+//        if (1 == nums[i])
+//        {
+//            count++;
+//        }
+//        else
+//        {
+//            arr[i] = count;
+//            count = 0;
+//            continue;
+//        }
+//    }
+//    if (i == numsSize)
+//    {
+//        arr[i] = count;
+//    }
+//    int max = 0;
+//    for (i = 0; i < 10001; i++)
+//    {
+//        if (max < arr[i])
+//        {
+//            max = arr[i];
+//        }
+//    }
+//    return max;
+//}
+
 int findMaxConsecutiveOnes(int* nums, int numsSize) {
+    int max_count = 0;
+    int tmp_count = 0;
     int i = 0;
-    int count = 0;
-    int arr[10001] = { 0 };
     for (i = 0; i < numsSize; i++)
     {
-        if (1 == nums[i])
+        if (nums[i])
         {
-            count++;
+            tmp_count++;
         }
         else
         {
-            arr[i] = count;
-            count = 0;
-            continue;
+            max_count = max_count > tmp_count ? max_count : tmp_count;
+            tmp_count = 0;
         }
     }
-    if (i == numsSize)
-    {
-        arr[i] = count;
-    }
-    int max = 0;
-    for (i = 0; i < 10001; i++)
-    {
-        if (max < arr[i])
-        {
-            max = arr[i];
-        }
-    }
-    return max;
+    max_count = max_count > tmp_count ? max_count : tmp_count;
+    return max_count;
 }
