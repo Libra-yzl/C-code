@@ -12,6 +12,8 @@
 #define MAX_TELE 12
 #define MAX_ADDR 30
 
+#define DEFAULT_SZ 3
+#define INC_SZ 2
 
 
 struct PeoInfo
@@ -24,12 +26,18 @@ struct PeoInfo
 
 };
 
+//struct Contact
+//{
+//	struct PeoInfo data[MAX_DATA];
+//	int sz;
+//};
+
 struct Contact
 {
-	struct PeoInfo data[MAX_DATA];
+	struct PeoInfo* data;
 	int sz;
+	int capacity;
 };
-
 
 void InitContact(struct Contact* pc);
 
@@ -50,3 +58,6 @@ void ModifyContact(struct Contact* pc);
 
 //ÅÅÐò
 void SortContact(struct Contact* pc);
+
+//Ïú»ÙÍ¨Ñ¶Â¼
+void DestroyContact(struct Contact* pc);

@@ -2,32 +2,81 @@
 
 #include "contact.h"
 
+//静态版本
+//void InitContact(struct Contact* pc)
+//{
+//	pc->sz = 0;
+//	memset(pc->data, 0, 1000 * sizeof(struct PeoInfo));
+//}
+
+//动态版本
 void InitContact(struct Contact* pc)
 {
+	assert(pc);
+	pc->data = (struct PeoInfo*)malloc(DEFAULT_SZ * sizeof(struct PeoInfo));
+	if (pc->data == NULL)
+	{
+		perror("InitContact");
+		return;
+	}
 	pc->sz = 0;
-	memset(pc->data, 0, 1000 * sizeof(struct PeoInfo));
+	pc->capacity = DEFAULT_SZ;
+}
+
+static int check_capacity(struct Contact* pc)
+{
+	if (pc->sz == pc->capacity)
+	{
+		struct PeoInfo* p = (struct PeoInfo*)realloc(pc->data, (pc->capacity + INC_SZ) * sizeof(struct PeoInfo));
+		if (p == NULL)
+		{
+			perror("AddContact");
+			return 0;
+		}
+		else
+		{
+			pc->data = p;
+			pc->capacity += INC_SZ;
+			printf("扩容成功\n");
+			return 1;
+		}
+	}
+	else//不需要扩容
+	{
+		return 1;
+	}
 }
 
 void AddContact(struct Contact* pc)
 {
 	assert(pc);
-	if (pc->sz == MAX_DATA)
+	//
+	/*if (pc->sz == MAX_DATA)
 	{
 		printf("通讯录已满，无法进行此操作\n");
 		return;
+	}*/
+	//
+	if (0 == check_capacity(pc))
+	{
+		return;
 	}
-	//增加人的消息
-	printf("请输入联系人的姓名:>");
-	scanf("%s", pc->data[pc->sz].name);
-	printf("请输入联系人的性别:>");
-	scanf("%s", pc->data[pc->sz].sex);
-	printf("请输入联系人的年龄:>");
-	scanf("%d", &pc->data[pc->sz].age);
-	printf("请输入联系人的电话:>");
-	scanf("%s", pc->data[pc->sz].tele);
-	printf("请输入联系人的住址:>");
-	scanf("%s", pc->data[pc->sz].addr);
-	pc->sz++;
+	else
+	{
+		//增加人的消息
+		printf("请输入联系人的姓名:>");
+		scanf("%s", pc->data[pc->sz].name);
+		printf("请输入联系人的性别:>");
+		scanf("%s", pc->data[pc->sz].sex);
+		printf("请输入联系人的年龄:>");
+		scanf("%d", &pc->data[pc->sz].age);
+		printf("请输入联系人的电话:>");
+		scanf("%s", pc->data[pc->sz].tele);
+		printf("请输入联系人的住址:>");
+		scanf("%s", pc->data[pc->sz].addr);
+		pc->sz++;
+		printf("成功增加联系人\n");
+	}
 }
 
 void ShowContact(const struct Contact* pc)
@@ -140,4 +189,14 @@ void SortContact(struct Contact* pc)
 	//按照年龄排序
 	qsort(pc->data, pc->sz, sizeof(struct PeoInfo), cmp_age);
 	printf("排序成功\n");
+}
+
+
+void DestroyContact(struct Contact* pc)
+{
+	free(pc->data);
+	pc->data = NULL;
+	pc->sz = 0;
+	pc->capacity = 0;
+	printf("销毁通讯录成功\n");
 }

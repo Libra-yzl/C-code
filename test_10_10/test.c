@@ -12,6 +12,18 @@ void menu()
 	printf("**********************************************\n");
 }
 
+
+enum Option
+{
+	EXIT,
+	ADD,
+	DEL,
+	SEARCH,
+	MODIFY,
+	SHOW,
+	SORT
+};
+
 int main()
 {
 	int input = 0;
@@ -29,28 +41,29 @@ int main()
 		default:
 			printf("没有这个选项，请重新选择");
 			break;
-		case 1:
+		case ADD:
 			AddContact(&con);
 			break;
-		case 2:
+		case DEL:
 			DelContact(&con);
 			break;
-		case 3:
+		case SEARCH:
 			SearchContact(&con);
 			break;
-		case 4:
+		case MODIFY:
 			ModifyContact(&con);
 			break;
-		case 5:
+		case SHOW:
 			ShowContact(&con);
 			break;
-		case 6:
+		case SORT:
 			SortContact(&con);
 			break;
 		/*case 7:
 			break;*/
-		case 0:
-			printf("退出通讯录\n");
+		case EXIT:
+			//printf("退出通讯录\n");
+			DestroyContact(&con);
 			break;
 		}
 	} while (input);
