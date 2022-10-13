@@ -222,7 +222,7 @@ void print2(struct tag *pt)
 {
 	int i = 0;
 	for (i = 0; i < 3; i++)
-		printf("%-10s %-10d %-10s", pt->name, pt->age, pt->addr);
+		printf("%-10s %-10d %-10s\n", pt[i].name, pt[i].age, pt[i].addr);
 }
 #include <string.h>
 
@@ -237,13 +237,13 @@ void test2()
 		{"lisi", 19, "xian"}, {.age = 22, .name = "wangwu", .addr = "zhengzhou"} };
 	int sz = sizeof(t) / sizeof(t[0]);
 	bubble_sort(t, sz, sizeof(t[0]), cmp_name);
-	int i = 0;
+	/*int i = 0;
 	for (i = 0; i < 3; i++)
 	{
 		printf("%-10s %-10d %-10s", t[i].name, t[i].age, t[i].addr);
 		printf("\n");
-	}
-	//print2(t);
+	}*/
+	print2(&t);
 }
 
 int cmp_float(const void* e1, const void* e2)
@@ -272,7 +272,7 @@ int main()
 {
 	//测试bubble_sort
 	//test1();//整型数据测试
-	//test2();//结构体测试
-	test3();//浮点数测试
+	test2();//结构体测试
+	//test3();//浮点数测试
 	return 0;
 }

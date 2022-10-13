@@ -1,3 +1,5 @@
 ﻿  test.c
+C:\Users\DELL\Desktop\test\C-code\test_10_9\test.c(246,11): warning C4047: “函数”:“tag *”与“tag (*)[3]”的间接级别不同
+C:\Users\DELL\Desktop\test\C-code\test_10_9\test.c(246,9): warning C4024: “print2”: 形参和实参 1 的类型不同
 C:\Users\DELL\Desktop\test\C-code\test_10_9\test.c(251,21): warning C4244: “return”: 从“float”转换到“int”，可能丢失数据
   test_10_9.vcxproj -> C:\Users\DELL\Desktop\test\C-code\test_10_9\x64\Debug\test_10_9.exe
