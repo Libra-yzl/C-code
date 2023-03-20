@@ -260,7 +260,7 @@ void find_mine(char mine[ROWS][COLS], char show[ROWS][COLS], int row, int col)
 					display(mine, ROW, COL);
 					printf("∫‹“≈∫∂£¨ƒ„±ª’®À¿¡À\n");
 					break;
-				}
+				} 
 				else
 				{
 					int count = get_mine_count(mine, x, y);
