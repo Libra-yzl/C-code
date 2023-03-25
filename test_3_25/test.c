@@ -251,3 +251,114 @@
 //	return 0;
 //}
 
+
+//求最小公倍数
+//#include <stdio.h>
+//
+//int main()
+//{
+//	int m = 0;
+//	int n = 0;
+//	scanf("%d %d", &n, &m);
+//
+//	//最大公约数
+//	int a = n;
+//	int b = m;
+//	int r = 1;
+//	while (r)
+//	{
+//		r = a % b;
+//		a = b;
+//		b = r;
+//	}
+//	printf("%d\n", a);
+//
+//	//最小公倍数
+//	int num = m * n / a;
+//	printf("%d\n", num);
+//
+//	return 0;
+//}
+
+//#include <stdio.h>
+//
+//int main()
+//{
+//	int n = 0;
+//	int m = 0;
+//	scanf("%d %d", &n, &m);
+//
+//	int r = m > n ? m : n;
+//	while (1)
+//	{
+//		if ((r % m == 0) && (r % n == 0))
+//			break;
+//		else
+//			r++;
+//	}
+//	printf("%d\n", r);
+//	return 0;
+//}
+
+//#include <stdio.h>
+//
+//int main()
+//{
+//	int m = 0;
+//	int n = 0;
+//	scanf("%d %d", &n, &m);
+//
+//	int i = 1;
+//	while (m * i % n != 0)
+//		i++;
+//	printf("%d\n", m * i);
+//	return 0;
+//}
+
+#include <stdio.h>
+#include <string.h>
+
+void reverse(char* left, char* right)
+{
+	//逆置
+	while (left < right)
+	{
+		char tmp = *left;
+		*left = *right;
+		*right = tmp;
+		left++;
+		right--;
+	}
+}
+
+int main()
+{
+	char str[20];
+	//gets(str);
+	scanf("%[^\n]", str);
+
+	char* tmp = str;
+	while (*tmp)
+	{
+		//逆序每个单词
+
+		//找空格之前且不是'\0'
+		char* start = tmp;
+		char* end = tmp;
+		while (*end != ' ' && *end != '\0')
+		{
+			end++;
+		}
+		//此时end-1就是一个单词的最后一个字母
+		reverse(start, end - 1);
+		if (*end != '\0')
+			tmp = end + 1;
+		else
+			tmp = end;
+	}
+	//整体逆置
+	int len = (int)strlen(str);
+	reverse(str, str + len - 1);
+	printf("%s\n", str);
+	return 0;
+}
