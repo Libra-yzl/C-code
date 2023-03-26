@@ -333,7 +333,7 @@ void reverse(char* left, char* right)
 
 int main()
 {
-	char str[20];
+	char str[20] = {0};
 	//gets(str);
 	scanf("%[^\n]", str);
 
@@ -356,9 +356,11 @@ int main()
 		else
 			tmp = end;
 	}
+
 	//ÕûÌåÄæÖÃ
 	int len = (int)strlen(str);
 	reverse(str, str + len - 1);
 	printf("%s\n", str);
+
 	return 0;
 }
