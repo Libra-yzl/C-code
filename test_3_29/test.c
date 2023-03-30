@@ -207,6 +207,18 @@ void test5()
 	print1(s,sz);
 }
 
+struct STU
+{
+	char name[20];
+	int age;
+}s1, s2;
+
+
+void test6()
+{
+	struct STU s1 = { "zhangsan", 20 };
+}
+
 int main()
 {
 	//test1();
@@ -216,6 +228,8 @@ int main()
 
 	//test4();
 
-	test5();
+	//test5();
+
+	test6();
 	return 0;
 }
