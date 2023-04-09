@@ -56,6 +56,7 @@ void test_contact()
 			SortContact(&con);
 			break;
 		case EXIT:
+			SaveContact(&con);
 			DestroyContact(&con);
 			printf("ÍË³ö\n");
 			break;
@@ -66,14 +67,14 @@ void test_contact()
 	} while (input);
 }
 
-//int main()
-//{
-//	test_contact();
-//	return 0;
-//}
+int main()
+{
+	test_contact();
+	return 0;
+}
 
-#include <stdio.h>
-#include <math.h>
+//#include <stdio.h>
+//#include <math.h>
 
 
 //int main()
@@ -225,18 +226,18 @@ void test_contact()
 //	return 0;
 //}
 
-#include<stdio.h>
-int main()
-{
-	union
-	{
-		short k;
-		char i[2];
-	}*s, a;
-	s = &a;
-	s->i[0] = 0x38;
-	s->i[1] = 0x39;
-	printf("%zd\n", sizeof(a));
-	printf("%x\n", a.k);
-	return 0;
-}
+//#include<stdio.h>
+//int main()
+//{
+//	union
+//	{
+//		short k;
+//		char i[2];
+//	}*s, a;
+//	s = &a;
+//	s->i[0] = 0x38;
+//	s->i[1] = 0x39;
+//	printf("%zd\n", sizeof(a));
+//	printf("%x\n", a.k);
+//	return 0;
+//}

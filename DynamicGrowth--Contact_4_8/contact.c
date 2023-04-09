@@ -10,12 +10,66 @@
 //	memset(pc->data, 0, MAX * sizeof(struct PeoInfo));
 //}
 
+static int check_capacity(struct Contact* pc);
+
+void LoadContact(struct Contact* pc)
+{
+	//打开文件
+	FILE* pf = fopen("Contact.txt", "r");
+	if (!pf)
+	{
+		perror("LoadContact:");
+		return;
+	}
+	//读文件
+	struct PeoInfo tmp = { 0 };
+	while (fread(&tmp, sizeof(struct PeoInfo), 1, pf))
+	{
+		//检查容量
+		check_capacity(pc);
+		pc->data[pc->sz] = tmp;
+		pc->sz++;
+	}
+
+	//关闭文件
+	fclose(pf);
+	pf = NULL;
+}
+
 void InitContact(struct Contact* pc)
 {
 	assert(pc);
 	pc->sz = 0;
 	pc->capacity = DEFAULT_SZ;
 	pc->data = (struct PeoInfo*)malloc(pc->capacity * sizeof(struct PeoInfo));
+	if (!(pc->data))
+	{
+		perror("InitContact:");
+		return;
+	}
+
+	//加载通讯录
+	LoadContact(pc);
+}
+
+void SaveContact(struct Contact* pc)
+{
+	//打开文件
+	FILE* pf = fopen("Contact.txt", "w");
+	if (!pf)
+	{
+		perror("SaveContact:");
+		return;
+	}
+	//写文件
+	for (int i = 0; i < pc->sz; i++)
+	{
+		fwrite(pc->data + i, sizeof(struct PeoInfo), 1, pf);
+	}
+
+	//关闭文件
+	fclose(pf);
+	pf = NULL;
 }
 
 void DestroyContact(struct Contact* pc)
