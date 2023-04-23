@@ -83,37 +83,89 @@ void SLPopBack(SL* ps)
 void SLInsert(SL* ps, int pos, SLDataType x)
 {
 	assert(ps);
+	assert(pos >= 0);
+	assert(pos <= ps->size);
 
-	int ret = check_capacity(ps);
-	if (-1 == ret)
-	{
-		perror("SLInsert::realloc");
-		return;
-	}
+	//¼ì²éÀ©ÈÝ
+	check_capacity(ps);
 	//²åÈë
-	if (ps->size == pos)
+	int end = ps->size - 1;
+	while (end >= pos)
 	{
-		SLPushBack(ps, x);
-		return;
+		ps->a[end + 1] = ps->a[end];
+		end--;
 	}
-	memmove(ps->a + pos + 1, ps->a + pos, ((ps->a + ps->size) - (ps->a + pos)+1) * sizeof(SLDataType));
-	ps->a[pos] = x;
 	ps->size++;
+	ps->a[pos] = x;
+	////²åÈë
+	//memmove(ps->a + pos + 1, ps->a + pos, ((ps->a + ps->size) - (ps->a + pos)+1) * sizeof(SLDataType));
+	//ps->a[pos] = x;
+	//ps->size++;
 
 }
 
 void SLDelete(SL* ps, int pos)
 {
 	assert(ps);
-	assert(ps->size >= 0);
+	assert(pos >= 0);
+	assert(pos < ps->size);
+	assert(ps->size > 0);
 
-	if (pos == ps->size)
+	int begin = pos;
+	while (begin < ps->size)
 	{
-		SLPopBack(ps);
-		return;
+		ps->a[begin] = ps->a[begin + 1];
+		begin++;
 	}
-
-	//É¾³ý
-	memmove(ps->a + pos, ps->a + pos + 1, ((ps->a + ps->size) - (ps->a + pos)) * sizeof(SLDataType));
 	ps->size--;
+	////É¾³ý
+	//memmove(ps->a + pos, ps->a + pos + 1, ((ps->a + ps->size) - (ps->a + pos)) * sizeof(SLDataType));
+	//ps->size--;
+}
+
+void SLPushFront(SL* ps, SLDataType x)
+{
+	assert(ps);
+
+	check_capacity(ps);
+
+	//memmove(ps->a + 1, ps->a, (ps->size) * sizeof(SLDataType));
+	int end = ps->size - 1;
+	while (end >= 0)
+	{
+		ps->a[end+1] = ps->a[end];
+		end--;
+	}
+	ps->a[0] = x;
+	ps->size++;
+}
+
+void SLPopFront(SL* ps)
+{
+	assert(ps);
+	assert(ps->size>0);
+
+	//Å²¶¯Êý¾Ý
+	//memmove(ps->a, ps->a + 1, (ps->size - 1) * sizeof(SLDataType));
+	int begin = 1;
+	while (begin < ps->size)
+	{
+		ps->a[begin - 1] = ps->a[begin];
+		begin++;
+	}
+	ps->size--;
+}
+
+int SLFind(SL* ps, SLDataType x, int begin)
+{
+	assert(ps);
+
+	for (int i = begin; i < ps->size; i++)
+	{
+		if (ps->a[i] == x)
+		{
+			return i;
+		}
+	}
+	return -1;
 }

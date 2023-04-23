@@ -51,11 +51,3 @@ void SLPopBack(SL* ps);
 void SLInsert(SL* ps, int pos, SLDataType x);
 //指定位置删除
 void SLDelete(SL* ps, int pos);
-
-//头插
-void SLPushFront(SL* ps, SLDataType x);
-//头删
-void SLPopFront(SL* ps);
-
-//begin是起始位置
-int SLFind(SL* ps, SLDataType x, int begin);
