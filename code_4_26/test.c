@@ -13,63 +13,76 @@ struct ListNode
 };
 
 
-//struct ListNode* BuySLTNode(SLTDataType n)
-//{
-//    struct ListNode* newnode = (struct ListNode*)malloc(sizeof(struct ListNode));
-//    if (!newnode)
-//    {
-//        perror("BuySLTNode::malloc");
-//        exit(-1);
-//    }
-//    newnode->val = n;
-//    newnode->next = NULL;
-//    return newnode;
-//}
-//
-//struct ListNode* CreateSLTNode(SLTDataType* arr, int n)
-//{
-//    struct ListNode* newnode = BuySLTNode(arr[0]);
-//    struct ListNode* head = newnode;
-//    struct ListNode* tail = newnode;
-//    for (int i = 1; i < n; i++)
-//    {
-//        newnode = BuySLTNode(arr[i]);
-//        tail->next = newnode;
-//        tail = newnode;
-//    }
-//    return head;
-//}
+struct ListNode* BuySLTNode(SLTDataType n)
+{
+    struct ListNode* newnode = (struct ListNode*)malloc(sizeof(struct ListNode));
+    if (!newnode)
+    {
+        perror("BuySLTNode::malloc");
+        exit(-1);
+    }
+    newnode->val = n;
+    newnode->next = NULL;
+    return newnode;
+}
 
 struct ListNode* CreateSLTNode(SLTDataType* arr, int n)
 {
-    struct ListNode* phead = NULL;
-    struct ListNode* ptail = NULL;
-
+    //struct ListNode* newnode = BuySLTNode(arr[0]);
+    struct ListNode* newnode = NULL;
+    struct ListNode* head = NULL;
+    struct ListNode* tail = NULL;
     for (int i = 0; i < n; i++)
     {
-        struct ListNode* newnode = (struct ListNode*)malloc(sizeof(struct ListNode));
+        newnode = BuySLTNode(arr[i]);
         if (!newnode)
         {
             perror("CreateSLTNode::malloc");
             exit(-1);
         }
-        else
+        if (head == NULL)
         {
-            newnode->val = arr[i];
-            newnode->next = NULL;
-        }
-        if (!phead)
-        {
-            phead = ptail = newnode;
+            head = tail = newnode;
         }
         else
         {
-            ptail->next = newnode;
-            ptail = newnode;
+            tail->next = newnode;
+            tail = newnode;
         }
     }
-    return phead;
+    return head;
 }
+
+//struct ListNode* CreateSLTNode(SLTDataType* arr, int n)
+//{
+//    struct ListNode* phead = NULL;
+//    struct ListNode* ptail = NULL;
+//
+//    for (int i = 0; i < n; i++)
+//    {
+//        struct ListNode* newnode = (struct ListNode*)malloc(sizeof(struct ListNode));
+//        if (!newnode)
+//        {
+//            perror("CreateSLTNode::malloc");
+//            exit(-1);
+//        }
+//        else
+//        {
+//            newnode->val = arr[i];
+//            newnode->next = NULL;
+//        }
+//        if (!phead)
+//        {
+//            phead = ptail = newnode;
+//        }
+//        else
+//        {
+//            ptail->next = newnode;
+//            ptail = newnode;
+//        }
+//    }
+//    return phead;
+//}
 
 SLTPrint(struct ListNode* phead)
 {
@@ -258,6 +271,9 @@ int main()
     plist2 = CreateSLTNode(arr1, (int)(sizeof(arr1) / sizeof(arr1[0])));
     plist = mergeTwoLists(plist1, plist2);
     SLTPrint(plist);
+
+    /*plist = CreateSLTNode(arr, sizeof(arr) / sizeof(arr[0]));
+    SLTPrint(plist);*/
     return 0;
 }
  
