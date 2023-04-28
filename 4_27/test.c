@@ -77,14 +77,34 @@ struct ListNode* FindKthToTail(struct ListNode* pListHead, int k) {
 	}
 	return slow;
 }
+//int main()
+//{
+//	SLDataType arr1[] = { 1,2,3,4,5 };
+//	struct ListNode* plist = NULL;
+//	plist = CreateSLNode(arr1, (int)(sizeof(arr1) / sizeof(arr1[0])));
+//	SLPrint(plist);
+//
+//	struct ListNode* newnode = FindKthToTail(plist, 6);
+//	SLPrint(newnode);
+//	return 0;
+
+
 int main()
 {
-	SLDataType arr1[] = { 1,2,3,4,5 };
-	struct ListNode* plist = NULL;
-	plist = CreateSLNode(arr1, (int)(sizeof(arr1) / sizeof(arr1[0])));
-	SLPrint(plist);
-
-	struct ListNode* newnode = FindKthToTail(plist, 6);
-	SLPrint(newnode);
+	int day = 0;
+	int month = 0;
+	int year = 0;
+	scanf("%d %d %d", &year, &month, &day);
+	int days[] = { 31,28,31,30,31,30,31,31,30,31,30,31 };
+	if (month >= 2)
+	{
+		if (year % 4 == 0 && year % 100 != 0 || year % 400 == 0)
+			days[1] += 1;
+	}
+	for (int i = 0; i < month-1; i++)
+	{
+		day += days[i];
+	}
+	printf("%d\n", day);
 	return 0;
 }
