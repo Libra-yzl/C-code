@@ -61,7 +61,6 @@ SLTPrint(struct ListNode* phead)
 struct ListNode* reverseBetween(struct ListNode* head, int m, int n) {
     struct ListNode* newhead = NULL;
     struct ListNode* newtail = NULL;
-    int s = n;
     if (m == n)
         return head;
     if (head == NULL || head->next == NULL)
@@ -80,7 +79,7 @@ struct ListNode* reverseBetween(struct ListNode* head, int m, int n) {
     while (m--)
     {
         if (1 == m)
-            revHead = cur;
+            revHead = cur->next;
         cur = cur->next;
     }
     //找到要反转区间的头节点
@@ -108,8 +107,9 @@ struct ListNode* reverseBetween(struct ListNode* head, int m, int n) {
     }
 
     //链接节点
-    revHead->next = curHead;
     ptail->next = revTail;
+    revHead->next = curHead;
+
 
     //释放哨兵位头节点
     head = newhead->next;
