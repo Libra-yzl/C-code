@@ -49,7 +49,7 @@ void TestHeap3()
 	srand((unsigned)time(NULL));
 	while (1)
 	{
-		int ret = rand()%100000;
+		int ret = rand()%100000+1;
 		printf("%d\n", ret);
 		Sleep(1000);
 	}
