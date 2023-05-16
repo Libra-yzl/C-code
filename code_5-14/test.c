@@ -65,6 +65,9 @@ void TestHeap3()
 	HeapDestroy(&hp);
 }
 
+//定义一个小堆的数组容量
+#define HEAP_MIN 5
+
 void TestHeap4()
 {
 	int minHeap[5];
@@ -113,11 +116,74 @@ void TestHeap4()
 	printf("\n");
 }
 
+void TestHeap5()
+{
+	//随机数生成器
+	srand((unsigned)time(NULL));
+	FILE* pf = fopen("data.txt", "w");
+	if (!pf)
+	{
+		perror("fopen fail");
+		return;
+	}
+	//将生成的数据写到文件中去
+	int k = 1000;
+	while (k--)
+	{
+		int ret = rand();
+		fprintf(pf, "%d\n", ret);
+	}
+	//关闭文件 先观察
+	fclose(pf);
+	pf = NULL;
+	
+	//将文件中的数据读出来
+	//找topk的数字
+	//建立小堆（找最大的Topk）
+	
+	pf = fopen("data.txt", "r");
+	if (!pf)
+	{
+		perror("fopen fail");
+		return;
+	}
+	int minheap[HEAP_MIN] = { 0 };
+	//先读取HEAP_MIN个数据进堆
+	int tmp = 5;
+	while (tmp--)
+	{
+		fscanf(pf, "%d", &minheap[tmp]);
+	}
+	AdjustDown(minheap, HEAP_MIN, 0);
+
+	//将剩下的数挨个进堆
+	int val = 0;
+	while (fscanf(pf, "%d", &val) != EOF)
+	{
+		if (val > minheap[0])
+		{
+			minheap[0] = val;
+			AdjustDown(minheap, HEAP_MIN, 0);
+		}
+	}
+
+	//观察堆的数据
+	for (int i = 0; i < HEAP_MIN; i++)
+	{
+		printf("%d ", minheap[i]);
+	}
+	printf("\n");
+
+	fclose(pf);
+	pf = NULL;
+}
+
 int main()
 {
 	//TestHeap1();
 	//TestHeap2();
 	//TestHeap3();
-	TestHeap4();
+	//TestHeap4();
+	TestHeap5();
 	return 0;
 }

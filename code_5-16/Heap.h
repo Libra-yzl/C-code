@@ -6,8 +6,6 @@
 #include <assert.h>
 #include <stdbool.h>
 #include <string.h>
-#include <time.h>
-
 
 
 typedef int HPDataType;
@@ -36,6 +34,3 @@ void HeapCreate(HP* php, HPDataType* a, int n);
 //实现向上调整/向下调整
 void AdjustUp(HPDataType* a, int child);
 void AdjustDown(HPDataType* a, int n, int parent);
-
-//堆排序
-void HeapSort(HPDataType* a, int n);
