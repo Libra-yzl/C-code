@@ -307,39 +307,39 @@ void QuickSort(int* a, int begin, int end)
 	}
 }
 
-void QuickSortNonR(int* a, int begin, int end)
-{
-	Stack st;
-	StackInit(&st);
-
-	StackPush(&st, begin);
-	StackPush(&st, end);
-
-	while (!StackEmpty(&st))
-	{
-		int right = StackTop(&st);
-		StackPop(&st);
-		int left = StackTop(&st);
-		StackPop(&st);
-
-		//一趟排
-		int keyi = PartSort3(a, left, right);
-
-		//入栈[left keyi - 1] keyi [keyi + 1, right]
-		if (keyi + 1 < right)
-		{
-			StackPush(&st, keyi + 1);
-			StackPush(&st, right);
-		}
-		if (left < keyi - 1)
-		{
-			StackPush(&st, left);
-			StackPush(&st, keyi - 1);
-		}
-	}
-
-	StackDestroy(&st);
-}
+//void QuickSortNonR(int* a, int begin, int end)
+//{
+//	Stack st;
+//	StackInit(&st);
+//
+//	StackPush(&st, begin);
+//	StackPush(&st, end);
+//
+//	while (!StackEmpty(&st))
+//	{
+//		int right = StackTop(&st);
+//		StackPop(&st);
+//		int left = StackTop(&st);
+//		StackPop(&st);
+//
+//		//一趟排
+//		int keyi = PartSort3(a, left, right);
+//
+//		//入栈[left keyi - 1] keyi [keyi + 1, right]
+//		if (keyi + 1 < right)
+//		{
+//			StackPush(&st, keyi + 1);
+//			StackPush(&st, right);
+//		}
+//		if (left < keyi - 1)
+//		{
+//			StackPush(&st, left);
+//			StackPush(&st, keyi - 1);
+//		}
+//	}
+//
+//	StackDestroy(&st);
+//}
 
 void StackInit(Stack* ps)
 {
@@ -400,40 +400,176 @@ int StackSize(Stack* ps)
 	return ps->top;
 }
 
+//void _MergeSort(int* a, int begin, int end, int* tmp)
+//{
+//	if (begin >= end)
+//		return;
+//	int mid = (begin + end) / 2;
+//
+//	_MergeSort(a, begin, mid, tmp);
+//	_MergeSort(a, mid + 1, end, tmp);
+//
+//	//归并
+//	int begin1 = begin;
+//	int end1 = mid;
+//	int begin2 = mid + 1;
+//	int end2 = end;
+//
+//	int i = begin;
+//	while (begin1 <= end1 && begin2 <= end2)
+//	{
+//		if (a[begin1] <= a[begin2])
+//		{
+//			tmp[i++] = a[begin1++];
+//		}
+//		else
+//		{
+//			tmp[i++] = a[begin2++];
+//		}
+//	}
+//	while (begin1 <= end1)
+//		tmp[i++] = a[begin1++];
+//	while (begin2 <= end2)
+//		tmp[i++] = a[begin2++];
+//
+//	//拷贝回原数组
+//	memcpy(a + begin, tmp + begin, (end - begin + 1) * sizeof(int));
+//}
+//
+//void MergeSort(int* a, int begin, int end)
+//{
+//	int* tmp = (int*)malloc(sizeof(int) * (end - begin + 1));
+//	if (!tmp)
+//	{
+//		perror("malloc fail");
+//		exit(-1);
+//	}
+//	
+//	_MergeSort(a, begin, end, tmp);
+//
+//	free(tmp);
+//	tmp = NULL;
+//}
+//
+//void MergeSortNonR(int* a, int sz)
+//{
+//	int* tmp = (int*)malloc(sizeof(int) * sz);
+//	if (!tmp)
+//	{
+//		perror("malloc fail");
+//		return;
+//	}
+//
+//	int rangeN = 1;
+//	while (rangeN < sz)
+//	{
+//		for (int i = 0; i < sz; i += 2 * rangeN)
+//		{
+//			int begin1 = i, end1 = i + rangeN - 1;
+//			int begin2 = i + rangeN, end2 = i + 2 * rangeN - 1;
+//
+//			if (end1 >= sz)
+//			{
+//				break;
+//			}
+//			else if (begin2 >= sz)
+//			{
+//				break;
+//			}
+//			else if (end2 >= sz)
+//			{
+//				end2 = sz - 1;
+//			}
+//
+//			int j = i;
+//			while (begin1 <= end1 && begin2 <= end2)
+//			{
+//				if (a[begin1] <= a[begin2])
+//				{
+//					tmp[j++] = a[begin1++];
+//				}
+//				else
+//				{
+//					tmp[j++] = a[begin2++];
+//				}
+//			}
+//			while (begin1 <= end1)
+//			{
+//				tmp[j++] = a[begin1++];
+//			}
+//			while (begin2 <= end2)
+//			{
+//				tmp[j++] = a[begin2++];
+//			}
+//
+//			memcpy(a + i, tmp + i, sizeof(int) * (end2 - i + 1));
+//		}
+//		rangeN *= 2;
+//	}
+//
+//	free(tmp);
+//	tmp = NULL;
+//}
+
+
+void QuickSortNonR(int* a, int begin, int end)
+{
+	Stack st;
+	StackInit(&st);
+
+	StackPush(&st, begin);
+	StackPush(&st, end);
+	while (!StackEmpty(&st))
+	{
+		//控制区间出栈 注意后进先出
+		int right = StackTop(&st);
+		StackPop(&st);
+		int left = StackTop(&st);
+		StackPop(&st);
+
+		//单趟排序
+		int keyi = PartSort3(a, left, right);
+
+		if (right > keyi + 1)
+		{
+			StackPush(&st, keyi + 1);
+			StackPush(&st, right);
+		}
+		if (left < keyi - 1)
+		{
+			StackPush(&st, left);
+			StackPush(&st, keyi - 1);
+		}
+	}
+
+	StackDestroy(&st);
+}
+
 void _MergeSort(int* a, int begin, int end, int* tmp)
 {
 	if (begin >= end)
 		return;
 	int mid = (begin + end) / 2;
-
 	_MergeSort(a, begin, mid, tmp);
 	_MergeSort(a, mid + 1, end, tmp);
 
 	//归并
-	int begin1 = begin;
-	int end1 = mid;
-	int begin2 = mid + 1;
-	int end2 = end;
-
+	int begin1 = begin, end1 = mid;
+	int begin2 = mid + 1, end2 = end;
 	int i = begin;
 	while (begin1 <= end1 && begin2 <= end2)
 	{
-		if (a[begin1] <= a[begin2])
-		{
+		if (a[begin1] < a[begin2])
 			tmp[i++] = a[begin1++];
-		}
 		else
-		{
 			tmp[i++] = a[begin2++];
-		}
 	}
 	while (begin1 <= end1)
 		tmp[i++] = a[begin1++];
 	while (begin2 <= end2)
 		tmp[i++] = a[begin2++];
 
-	//拷贝回原数组
-	memcpy(a + begin, tmp + begin, (end - begin + 1) * sizeof(int));
+	memcpy(a + begin, tmp + begin, sizeof(int) * (end - begin + 1));
 }
 
 void MergeSort(int* a, int begin, int end)
@@ -442,9 +578,8 @@ void MergeSort(int* a, int begin, int end)
 	if (!tmp)
 	{
 		perror("malloc fail");
-		exit(-1);
+		return;
 	}
-	
 	_MergeSort(a, begin, end, tmp);
 
 	free(tmp);
@@ -457,54 +592,88 @@ void MergeSortNonR(int* a, int sz)
 	if (!tmp)
 	{
 		perror("malloc fail");
-		return;
+		exit(-1);
 	}
 
 	int rangeN = 1;
 	while (rangeN < sz)
 	{
-		for (int i = 0; i < sz; i += 2 * rangeN)
+		for (int i = 0; i < sz; i += rangeN * 2)
 		{
 			int begin1 = i, end1 = i + rangeN - 1;
-			int begin2 = i + rangeN, end2 = i + 2 * rangeN - 1;
+			int begin2 = i + rangeN, end2 = i + rangeN * 2 - 1;
 
+			int j = i;
 			if (end1 >= sz)
 			{
-				break;
+				end1 = sz - 1;
+				begin2 = sz;
+				end2 = sz - 1;
 			}
 			else if (begin2 >= sz)
 			{
-				break;
+				begin2 = sz;
+				end2 = sz - 1;
 			}
 			else if (end2 >= sz)
 			{
 				end2 = sz - 1;
 			}
-
-			int j = i;
 			while (begin1 <= end1 && begin2 <= end2)
 			{
-				if (a[begin1] <= a[begin2])
-				{
+				if (a[begin1] < a[begin2])
 					tmp[j++] = a[begin1++];
-				}
 				else
-				{
 					tmp[j++] = a[begin2++];
-				}
 			}
 			while (begin1 <= end1)
-			{
 				tmp[j++] = a[begin1++];
-			}
 			while (begin2 <= end2)
-			{
 				tmp[j++] = a[begin2++];
-			}
 
-			memcpy(a + i, tmp + i, sizeof(int) * (end2 - i + 1));
 		}
+		memcpy(a, tmp, sizeof(int) * sz);
 		rangeN *= 2;
+	}
+
+	free(tmp);
+	tmp = NULL;
+}
+
+//计数排序
+void CountSort(int* a, int sz)
+{
+	int max = a[0], min = a[0];
+	for (int i = 0; i < sz; i++)
+	{
+		if (a[i] < min)
+			min = a[i];
+		if (a[i] > max)
+			max = a[i];
+	}
+	//计算要开辟空间的范围
+	int range = max - min + 1;
+	
+	int* tmp = (int*)calloc(range, sizeof(int));
+	if (!tmp)
+	{
+		perror("calloc fail");
+		exit(-1);
+	}
+	//统计次数
+	for (int i = 0; i < sz; i++)
+	{
+		tmp[a[i] - min]++;
+	}
+
+	//排序
+	int k = 0;
+	for (int i = 0; i < range; i++)
+	{
+		while (tmp[i]--)
+		{
+			a[k++] = i + min;
+		}
 	}
 
 	free(tmp);

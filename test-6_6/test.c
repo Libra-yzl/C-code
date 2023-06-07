@@ -110,6 +110,102 @@ void TestMergeSortNonR()
 	Print(a, sz);
 }
 
+void TestCountSort()
+{
+	int a[] = { 4,8,5,6,9,2,2,3,7,10,1,-2,-3,-2,-5,-5,-3,-2,-2 };
+	int sz = sizeof(a) / sizeof(a[0]);
+	printf("\nCountSort:\n");
+	printf("排序前数组:\n");
+	Print(a, sz);
+	CountSort(a, sz);
+	printf("排序后数组:\n");
+	Print(a, sz);
+}
+
+void TestTime()
+{
+	int N = 10000000;
+	int* a1 = (int*)malloc(sizeof(int) * N);
+	if (!a1)
+		return;
+	int* a2 = (int*)malloc(sizeof(int) * N);
+	if (!a2)
+		return;
+	int* a3 = (int*)malloc(sizeof(int) * N);
+	if (!a3)
+		return;
+	int* a4 = (int*)malloc(sizeof(int) * N);
+	if (!a4)
+		return;
+	int* a5 = (int*)malloc(sizeof(int) * N);
+	if (!a5)
+		return;
+	int* a6 = (int*)malloc(sizeof(int) * N);
+	if (!a6)
+		return;
+	int* a7 = (int*)malloc(sizeof(int) * N);
+	if (!a7)
+		return;
+
+	for (int i = 0; i < N; i++)
+	{
+		int x = rand()+i;
+
+		a1[i] = x;
+		a2[i] = a1[i];
+		a3[i] = a1[i];
+		a4[i] = a1[i];
+		a5[i] = a1[i];
+		a6[i] = a1[i];
+		a7[i] = a1[i];
+	}
+
+	int begin1 = clock();
+	ShellSort(a1, N);
+	int end1 = clock();
+
+	int begin2 = clock();
+	HeapSort(a2, N);
+	int end2 = clock();
+
+	int begin3 = clock();
+	QuickSort(a3, 0, N-1);
+	int end3 = clock();
+
+	int begin4 = clock();
+	MergeSort(a4, 0, N-1);
+	int end4 = clock();
+
+	int begin5 = clock();
+	QuickSortNonR(a5, 0, N-1);
+	int end5 = clock();
+
+	int begin6 = clock();
+	MergeSortNonR(a6, N);
+	int end6 = clock();
+
+	int begin7 = clock();
+	CountSort(a7, N);
+	int end7 = clock();
+
+	printf("ShellSort:%dms\n", end1 - begin1);
+	printf("HeapSort:%dms\n", end2 - begin2);
+	printf("QuickSort:%dms\n", end3 - begin3);
+	printf("MergeSort:%dms\n", end4 - begin4);
+	printf("QuickSortNonR:%dms\n", end5 - begin5);
+	printf("MergeSortNonR:%dms\n", end6 - begin6);
+	printf("CountSort:%dms\n", end7 - begin7);
+
+	free(a1);
+	free(a2);
+	free(a3);
+	free(a4);
+	free(a5);
+	free(a6);
+	free(a7);
+	a1 = a2 = a3 = a4 = a5 = a6 = a7 = NULL;
+}
+
 int main()
 {
 	//TestInsertSort();
@@ -118,11 +214,15 @@ int main()
 	//TestSelectSort();
 	//TestHeapSort();
 
-	/*TestBubbleSort();
-	TestQuickSort();
-	TestQuickSortNonR();*/
+	//TestBubbleSort();
+	//TestQuickSort();
+	//TestQuickSortNonR();
 
 	TestMergeSort();
 	TestMergeSortNonR();
+
+	TestCountSort();
+
+	//TestTime();
 	return 0;
 }

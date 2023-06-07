@@ -5,6 +5,8 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <assert.h>
+#include <time.h>
+
 
 
 void Print(int* a, int sz);
@@ -35,6 +37,9 @@ void QuickSortNonR(int* a, int begin, int end);
 
 void MergeSort(int* a, int begin, int end);
 void MergeSortNonR(int* a, int sz);
+
+//¼ÆÊýÅÅÐò
+void CountSort(int* a, int sz);
 
 typedef struct Stack
 {
