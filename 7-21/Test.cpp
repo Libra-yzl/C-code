@@ -20,8 +20,8 @@ void TestDate1()
 
 void TestDate2()
 {
-	Date d1;
-	Date d2(2002, 9, 28);
+	Date d1(2023, 7, 23);
+	Date d2(1966, 8, 23);
 	cout << d1 - d2 << endl;
 	cout << d2 - d1 << endl;
 }
@@ -64,9 +64,9 @@ void TestDate5()
 int main()
 {
 	//TestDate1();
-	//TestDate2();
+	TestDate2();
 	//TestDate3();
 	//TestDate4();
-	TestDate5();
+	//TestDate5();
 	return 0;
 }
