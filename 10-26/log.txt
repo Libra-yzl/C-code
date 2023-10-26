@@ -1,0 +1,3 @@
+hello myfile:0
+hello myfile:1
+hello myfile:2
