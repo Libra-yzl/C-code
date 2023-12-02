@@ -24,7 +24,7 @@ void* productor(void* args)
     
     while (true) {
         // 生产数据
-        sleep(3);
+        sleep(1);
 
         int data = rand() % 10 + 1; // 1-10的数字充当数据
         bq->push(data);
